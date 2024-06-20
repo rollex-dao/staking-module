@@ -9,7 +9,7 @@ import {DistributionTypes} from '../lib/DistributionTypes.sol';
 import {SafeERC20} from '../lib/SafeERC20.sol';
 
 import {VersionedInitializable} from '../utils/VersionedInitializable.sol';
-import {AaveDistributionManager} from './AaveDistributionManager.sol';
+import {RexDistributionManager} from './RexDistributionManager.sol';
 import {GovernancePowerWithSnapshot} from '../lib/GovernancePowerWithSnapshot.sol';
 
 /**
@@ -21,7 +21,7 @@ abstract contract StakedTokenV2 is
   IStakedTokenV2,
   GovernancePowerWithSnapshot,
   VersionedInitializable,
-  AaveDistributionManager
+  RexDistributionManager
 {
   using SafeERC20 for IERC20;
 
@@ -68,7 +68,7 @@ abstract contract StakedTokenV2 is
     address rewardsVault,
     address emissionManager,
     uint128 distributionDuration
-  ) ERC20() AaveDistributionManager(emissionManager, distributionDuration) {
+  ) ERC20() RexDistributionManager(emissionManager, distributionDuration) {
     STAKED_TOKEN = stakedToken;
     REWARD_TOKEN = rewardToken;
     UNSTAKE_WINDOW = unstakeWindow;
@@ -88,11 +88,9 @@ abstract contract StakedTokenV2 is
   function claimRewards(address to, uint256 amount) external virtual override;
 
   /// @inheritdoc IStakedTokenV2
-  function getTotalRewardsBalance(address staker)
-    external
-    view
-    returns (uint256)
-  {
+  function getTotalRewardsBalance(
+    address staker
+  ) external view returns (uint256) {
     DistributionTypes.UserStakeInput[]
       memory userStakeInputs = new DistributionTypes.UserStakeInput[](1);
     userStakeInputs[0] = DistributionTypes.UserStakeInput({
@@ -247,7 +245,9 @@ abstract contract StakedTokenV2 is
    * @param delegationType the requested DelegationType
    * @return the relevant storage
    */
-  function _getDelegationDataByType(DelegationType delegationType)
+  function _getDelegationDataByType(
+    DelegationType delegationType
+  )
     internal
     view
     override
