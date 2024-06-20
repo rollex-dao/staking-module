@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import {IStakedTokenV3} from './IStakedTokenV3.sol';
 import {IGhoVariableDebtTokenTransferHook} from './IGhoVariableDebtTokenTransferHook.sol';
 
-interface IStakedAaveV3 is IStakedTokenV3 {
+interface IStakedRexV3 is IStakedTokenV3 {
   struct ExchangeRateSnapshot {
     uint40 blockNumber;
     uint216 value;
@@ -21,26 +21,27 @@ interface IStakedAaveV3 is IStakedTokenV3 {
    * @dev Returns the exchangeRate for a specified index
    * @param index Index of the exchangeRate
    */
-  function getExchangeRateSnapshot(uint32 index)
-    external
-    view
-    returns (ExchangeRateSnapshot memory);
+  function getExchangeRateSnapshot(
+    uint32 index
+  ) external view returns (ExchangeRateSnapshot memory);
 
   /**
    * @dev Sets the GHO debt token (only callable by SHORT_EXECUTOR)
    * @param newGHODebtToken Address to GHO debt token
    */
-  function setGHODebtToken(IGhoVariableDebtTokenTransferHook newGHODebtToken)
-    external;
+  function setGHODebtToken(
+    IGhoVariableDebtTokenTransferHook newGHODebtToken
+  ) external;
 
   /**
    * @dev Claims an `amount` of `REWARD_TOKEN` and stakes.
    * @param to Address to stake to
    * @param amount Amount to claim
    */
-  function claimRewardsAndStake(address to, uint256 amount)
-    external
-    returns (uint256);
+  function claimRewardsAndStake(
+    address to,
+    uint256 amount
+  ) external returns (uint256);
 
   /**
    * @dev Claims an `amount` of `REWARD_TOKEN` and stakes. Only the claim helper contract is allowed to call this function

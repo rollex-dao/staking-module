@@ -4,11 +4,11 @@ pragma solidity ^0.8.0;
 import {DistributionTypes} from '../lib/DistributionTypes.sol';
 
 /**
- * @title AaveDistributionManager
+ * @title RexDistributionManager
  * @notice Accounting contract to manage multiple staking distributions
- * @author Aave
+ * @author Aave & SYSLabs
  */
-contract AaveDistributionManager {
+contract RexDistributionManager {
   struct AssetData {
     uint128 emissionPerSecond;
     uint128 lastUpdateTimestamp;
@@ -66,7 +66,7 @@ contract AaveDistributionManager {
 
   /**
    * @dev Updates the state of one distribution, mainly rewards index and timestamp
-   * @param underlyingAsset The address used as key in the distribution, for example sAAVE or the aTokens addresses on Aave
+   * @param underlyingAsset The address used as key in the distribution, for example sREX or the aTokens addresses on REX
    * @param assetConfig Storage pointer to the distribution's config
    * @param totalStaked Current total of staked assets for this distribution
    * @return The new distribution index
@@ -204,7 +204,7 @@ contract AaveDistributionManager {
   ) internal pure returns (uint256) {
     return
       (principalUserBalance * (reserveIndex - userIndex)) /
-      (10**uint256(PRECISION));
+      (10 ** uint256(PRECISION));
   }
 
   /**
@@ -235,7 +235,7 @@ contract AaveDistributionManager {
       : block.timestamp;
     uint256 timeDelta = currentTimestamp - lastUpdateTimestamp;
     return
-      ((emissionPerSecond * timeDelta * (10**uint256(PRECISION))) /
+      ((emissionPerSecond * timeDelta * (10 ** uint256(PRECISION))) /
         totalBalance) + currentIndex;
   }
 
@@ -245,11 +245,10 @@ contract AaveDistributionManager {
    * @param asset The address of the reference asset of the distribution
    * @return The new index
    */
-  function getUserAssetData(address user, address asset)
-    public
-    view
-    returns (uint256)
-  {
+  function getUserAssetData(
+    address user,
+    address asset
+  ) public view returns (uint256) {
     return assets[asset].users[user];
   }
 }
