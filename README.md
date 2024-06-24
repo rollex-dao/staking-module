@@ -94,5 +94,5 @@ make diff-all
 ### Deploy
 
 ```sh
-forge script scripts/DeployStakedREXV3.s.sol --rpc-url rollux --broadcast --gas-price 1000000000 --priority-gas-price 1
+forge script scripts/DeployStakedREXV3.s.sol --rpc-url rollux --broadcast --gas-price 1000000000 --priority-gas-price 1 --verify --verifier blockscout --verifier-url https://explorer.rollux.com/api
 ```
