@@ -9,9 +9,9 @@ remappings = [
 fs_permissions = [{access = "write", path = "./reports"}]
 
 [rpc_endpoints]
-rollux = "https://rpc1.rollux.com/"
+rollux = "https://rpc.rollux.com/"
 
 [etherscan]
-rollux={key="abc",chainId=570}
+rollux = { chain_id = 570, key = "abc", url = "https://explorer.rollux.com/api" }
 
 # See more config options https://github.com/gakonst/foundry/tree/master/config
